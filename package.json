@@ -1,0 +1,71 @@
+{
+  "name": "indexed-image-editor",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Alex Peters, Mark Halls",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start":
+      "cross-env NODE_ENV=development webpack-dev-server --watch --color --config ./config/webpack.config.dev.js & electron .",
+    "lint": "tslint --project .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "electron": "^1.7.9",
+    "immutable": "^3.8.2",
+    "react": "^16.1.1",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-immutable": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.3",
+    "@types/react": "^16.0.25",
+    "@types/react-dnd": "^2.0.34",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-hot-loader": "^3.0.5",
+    "@types/react-redux": "^5.0.13",
+    "@types/webpack": "^3.8.1",
+    "@types/webpack-env": "^1.13.2",
+    "app-root-path": "^2.0.1",
+    "cross-env": "^5.1.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.2.1",
+    "node-sass": "^4.7.1",
+    "prettier": "^1.8.2",
+    "react-hot-loader": "^3.1.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "stylelint": "^8.2.0",
+    "stylelint-config-recommended": "^1.0.0",
+    "ts-jest": "^21.2.3",
+    "ts-loader": "^3.1.1",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "tslint-language-service": "^0.9.6",
+    "tslint-plugin-prettier": "^1.3.0",
+    "tslint-react": "^3.2.0",
+    "typescript": "^2.6.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4",
+    "webpack-env": "^0.8.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx"],
+    "modulePaths": ["<rootDir>/src/"]
+  }
+}
