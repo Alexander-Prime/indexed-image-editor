@@ -9,7 +9,7 @@ interface Props {}
 const CanvasView = (_: Props) => {
   return (
     <div className="canvasView">
-      <Fab />
+      <Fab className="canvasView-gridToggle" />
     </div>
   );
 };
