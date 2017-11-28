@@ -3,18 +3,28 @@ import React from "react";
 
 import { RampView } from "components/molecules";
 
+import { Palette } from "data/Palette";
+
 import "./PaletteView.scss";
 
 interface Props {
   className?: string;
+  palette: Palette;
 }
 
 const PaletteView = (props: Props) => (
   <div className={classNames("palette", props.className)}>
     <header className="palette-header">Palette</header>
-    <RampView className="palette-ramp" name="Ramp A" />
-    <RampView className="palette-ramp" name="Ramp B" />
-    <RampView className="palette-ramp" name="Ramp C" />
+    {props.palette.ramps
+      .entrySeq()
+      .map(entry => (
+        <RampView
+          className="palette-ramp"
+          palette={props.palette}
+          index={entry[0]}
+          ramp={entry[1]}
+        />
+      ))}
   </div>
 );
 
