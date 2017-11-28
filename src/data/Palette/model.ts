@@ -9,7 +9,7 @@ interface PaletteProps {
 
 class Palette extends Record<PaletteProps>({
   colors: List(),
-  ramps: Map(),
+  ramps: Map.of(0, new Ramp({ name: "Ramp 1" })),
 }) {}
 
 export { Palette };
