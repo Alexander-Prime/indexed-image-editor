@@ -4,8 +4,6 @@ import "./Sidebar.scss";
 
 interface Props {}
 
-const Sidebar = (_: Props) => {
-  return <div className="sidebar" />;
-};
+const Sidebar = (_: Props) => <div className="sidebar" />;
 
 export { Sidebar };

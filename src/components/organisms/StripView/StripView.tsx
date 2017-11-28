@@ -4,8 +4,6 @@ import "./StripView.scss";
 
 interface Props {}
 
-const StripView = (_: Props) => {
-  return <div className="stripView" />;
-};
+const StripView = (_: Props) => <div className="stripView" />;
 
 export { StripView };

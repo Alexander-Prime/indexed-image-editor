@@ -7,8 +7,8 @@ interface Props {
   className?: string;
 }
 
-const Fab = (props: Props) => {
-  return <button className={classNames("fab", props.className)}>⌗</button>;
-};
+const Fab = (props: Props) => (
+  <button className={classNames("fab", props.className)}>⌗</button>
+);
 
 export { Fab };

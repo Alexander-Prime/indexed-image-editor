@@ -6,12 +6,10 @@ import "./CanvasView.scss";
 
 interface Props {}
 
-const CanvasView = (_: Props) => {
-  return (
-    <div className="canvasView">
-      <Fab className="canvasView-gridToggle" />
-    </div>
-  );
-};
+const CanvasView = (_: Props) => (
+  <div className="canvasView">
+    <Fab className="canvasView-gridToggle" />
+  </div>
+);
 
 export { CanvasView };
