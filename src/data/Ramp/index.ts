@@ -1,0 +1,1 @@
+export { Ramp } from "./model";
