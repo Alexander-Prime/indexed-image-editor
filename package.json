@@ -6,8 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start":
-      "cross-env NODE_ENV=development webpack-dev-server --watch --color --config ./config/webpack.config.dev.js & electron .",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --watch --color --config ./config/webpack.config.dev.js & electron .",
     "lint": "tslint --project .",
     "test": "jest"
   },
@@ -41,7 +40,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.1",
-    "node-sass": "^4.7.1",
+    "node-sass": "^4.7.2",
     "prettier": "^1.8.2",
     "react-hot-loader": "^3.1.3",
     "sass-loader": "^6.0.6",
@@ -65,7 +64,14 @@
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx"],
-    "modulePaths": ["<rootDir>/src/"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "modulePaths": [
+      "<rootDir>/src/"
+    ]
   }
 }

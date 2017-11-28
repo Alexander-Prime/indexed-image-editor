@@ -1,0 +1,11 @@
+.editorPage {
+  outline: dashed 2px black;
+  height: 100vh;
+
+  display: grid;
+  grid-template-rows: 200px 1fr;
+  grid-template-columns: 1fr 400px;
+  grid-template-areas:
+    "strip  sidebar"
+    "canvas sidebar";
+}

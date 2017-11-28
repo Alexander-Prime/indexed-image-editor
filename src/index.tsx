@@ -4,6 +4,8 @@ import { AppContainer } from "react-hot-loader";
 
 import { EditorPage } from "components/pages";
 
+import "./index.scss";
+
 const rootElem = document.querySelector(".root");
 
 const renderRoot = () => {
