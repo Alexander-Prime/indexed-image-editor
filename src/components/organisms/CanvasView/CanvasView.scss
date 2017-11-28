@@ -1,6 +1,7 @@
 .canvasView {
   grid-area: canvas;
   position: relative;
+  background: #444;
 
   &-gridToggle {
     background: rgba(0, 0, 0, 0.6);
@@ -8,5 +9,24 @@
     position: absolute;
     right: 16px;
     bottom: 16px;
+  }
+
+  &-gridOverlay {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        white,
+        white 1px,
+        transparent 1px,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        white,
+        white 1px,
+        transparent 1px,
+        transparent 100%
+      );
   }
 }
