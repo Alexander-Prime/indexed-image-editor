@@ -20,6 +20,7 @@ const PaletteView = (props: Props) => (
       .map(entry => (
         <RampView
           className="palette-ramp"
+          key={`${entry[1].name}@${entry[0]}`}
           palette={props.palette}
           index={entry[0]}
           ramp={entry[1]}
