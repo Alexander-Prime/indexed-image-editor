@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Fab } from "components/atoms";
+import { Fab, Icon } from "components/atoms";
 
 import "./CanvasView.scss";
 
@@ -10,7 +10,9 @@ const CanvasView = (_: Props) => {
   const zoomFactor = 32;
   return (
     <div className="canvasView">
-      <Fab className="canvasView-gridToggle" />
+      <Fab className="canvasView-gridToggle">
+        <Icon className="canvasView-gridToggle-icon" name="grid_on" />
+      </Fab>
       <div className="canvasView-gridOverlay" style={gridStyle(zoomFactor)} />
     </div>
   );
