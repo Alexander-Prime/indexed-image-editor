@@ -8,4 +8,7 @@
   grid-template-areas:
     "strip  sidebar"
     "canvas sidebar";
+
+  background: var(--color-bg);
+  color: var(--color-fg);
 }

@@ -1,17 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import { CanvasView, Sidebar, StripView } from "components/organisms";
 
+import { AppState } from "data/AppState";
+import { Theme } from "data/Theme";
+
 import "./EditorPage.scss";
 
-interface Props {}
+interface StateProps {
+  theme: Theme;
+}
 
-const EditorPage = (_: Props) => (
-  <div className="editorPage">
+interface OwnProps {}
+
+type Props = StateProps & OwnProps;
+
+const EditorPageInternal = (props: Props) => (
+  <div
+    className="editorPage"
+    style={{
+      "--color-bg": props.theme.backgroundColor,
+      "--color-fg": props.theme.foregroundColor,
+      "--color-grid": props.theme.gridColor,
+    }}
+  >
     <CanvasView />
     <Sidebar />
     <StripView />
   </div>
 );
+
+const mapStateToProps = (state: AppState): StateProps => ({
+  theme: state.theme,
+});
+
+const EditorPage = connect(mapStateToProps)(EditorPageInternal);
 
 export { EditorPage };
