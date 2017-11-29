@@ -1,19 +1,19 @@
-import { List, Record } from "immutable";
+import { Record } from "immutable";
 
-import { Frame } from "data/Frame";
 import { Palette } from "data/Palette";
+import { Strip } from "data/Strip";
 
 interface ImageProps {
   width: number;
   height: number;
-  frames: List<Frame>;
+  strip: Strip;
   palette: Palette;
 }
 
 class Image extends Record<ImageProps>({
   width: 32,
   height: 32,
-  frames: List.of(new Frame()),
+  strip: new Strip(),
   palette: new Palette(),
 }) {}
 
