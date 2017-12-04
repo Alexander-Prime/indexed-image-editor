@@ -54,9 +54,21 @@ class CanvasViewInternal extends React.PureComponent<Props> {
   }
 
   private renderPixels() {
-    this.ctx.fillStyle = "#ffffff";
-    this.ctx.fillRect(4, 4, 24, 24);
-    this.ctx.clearRect(5, 5, 22, 22);
+    const { image, frame } = this.props;
+    const pixels = frame.pixels.reduce((prior: number[], i?: number) => {
+      if (i === undefined) {
+        prior.push(0, 0, 0, 0);
+        return prior;
+      }
+      prior.push(...image.palette.colors.get(i, [0, 0, 0]), 255);
+      return prior;
+    }, []);
+    const bytes = new Uint8ClampedArray(pixels);
+    this.ctx.putImageData(
+      new ImageData(bytes, image.width, image.height),
+      0,
+      0,
+    );
   }
 }
 

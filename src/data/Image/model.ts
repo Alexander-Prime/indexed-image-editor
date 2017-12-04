@@ -11,8 +11,8 @@ interface ImageProps {
 }
 
 class Image extends Record<ImageProps>({
-  width: 32,
-  height: 32,
+  width: 8,
+  height: 8,
   strip: new Strip(),
   palette: new Palette(),
 }) {}
