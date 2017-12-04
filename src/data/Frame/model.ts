@@ -1,7 +1,7 @@
 import { List, Record } from "immutable";
 
 interface FrameProps {
-  pixels: List<number>; // palette index, -1 for transparent
+  pixels: List<number | undefined>; // palette index, undefined for transparent
 }
 
 class Frame extends Record<FrameProps>({
