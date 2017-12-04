@@ -12,6 +12,7 @@ import "./CanvasView.scss";
 interface StateProps {
   image: Image;
   frame: Frame;
+  zoom: number;
 }
 
 interface OwnProps {}
@@ -26,10 +27,9 @@ class CanvasViewInternal extends React.PureComponent<Props> {
   }
 
   render() {
-    const { image } = this.props;
-    const zoomFactor = 32;
-    const elementWidth = image.width * zoomFactor;
-    const elementHeight = image.height * zoomFactor;
+    const { image, zoom } = this.props;
+    const elementWidth = image.width * zoom;
+    const elementHeight = image.height * zoom;
     return (
       <div className="canvasView">
         <Fab className="canvasView-gridToggle">
@@ -46,7 +46,7 @@ class CanvasViewInternal extends React.PureComponent<Props> {
           />
           <div
             className="canvasView-frame-gridOverlay"
-            style={gridStyle(zoomFactor)}
+            style={gridStyle(zoom)}
           />
         </div>
       </div>
@@ -80,6 +80,7 @@ const gridStyle = (zoomFactor: number) => ({
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
   frame: state.image.strip.frames.first()!,
+  zoom: state.zoom,
 });
 
 const CanvasView = connect(mapStateToProps)(CanvasViewInternal);
