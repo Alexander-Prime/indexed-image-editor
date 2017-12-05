@@ -1,16 +1,17 @@
+import { List } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 
 import { AppState } from "data/AppState";
+import { Frame } from "data/Frame";
 import { Palette } from "data/Palette";
-import { Strip } from "data/Strip";
 
 import { FrameView } from "components/molecules";
 
-import "./StripView.scss";
+import "./Strip.scss";
 
 interface StateProps {
-  strip: Strip;
+  frames: List<Frame>;
   palette: Palette;
 }
 
@@ -18,17 +19,17 @@ interface OwnProps {}
 
 type Props = StateProps & OwnProps;
 
-const StripViewInternal = (props: Props) => (
+const StripInternal = (props: Props) => (
   <div className="stripView">
-    {props.strip.frames.map((frame, i) => <FrameView frame={frame} key={i} />)}
+    {props.frames.map((frame, i) => <FrameView frame={frame} key={i} />)}
   </div>
 );
 
 const mapStateToProps = (state: AppState): StateProps => ({
-  strip: state.image.strip,
+  frames: state.image.frames,
   palette: state.image.palette,
 });
 
-const StripView = connect(mapStateToProps)(StripViewInternal);
+const Strip = connect(mapStateToProps)(StripInternal);
 
-export { StripView };
+export { Strip };
