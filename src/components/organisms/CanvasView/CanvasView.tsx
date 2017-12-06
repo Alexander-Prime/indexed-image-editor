@@ -1,11 +1,14 @@
-import { List, Repeat } from "immutable";
+import { List, Repeat, Set } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+
+import { Rgb } from "common/types";
 
 import { Fab, Icon } from "components/atoms";
 
 import { AppState } from "data/AppState";
-import { Image } from "data/Image";
+import { draw, erase, Image } from "data/Image";
 
 import "./CanvasView.scss";
 
@@ -18,7 +21,10 @@ interface StateProps {
 
 interface OwnProps {}
 
-type Props = StateProps & OwnProps;
+interface Props extends StateProps, OwnProps {
+  draw: (drawMask: Set<number>) => void;
+  erase: (eraseMask: Set<number>) => void;
+}
 
 interface State {
   drawMask: List<boolean>;
@@ -131,6 +137,16 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   };
 
   private onFinishDraw = (_: React.MouseEvent<HTMLCanvasElement>) => {
+    const mask = this.state.drawMask
+      .entrySeq()
+      .filter(entry => entry[1])
+      .map(entry => entry[0])
+      .toSet();
+    if (this.state.drawMode === "draw") {
+      this.props.draw(mask);
+    } else {
+      this.props.erase(mask);
+    }
     this.setState({
       drawMask: this.createMask(this.props.image),
     });
@@ -164,6 +180,26 @@ const mapStateToProps = (state: AppState): StateProps => ({
   paletteIndex: 0,
 });
 
-const CanvasView = connect(mapStateToProps)(CanvasViewInternal);
+const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({ dispatch });
+
+const mergeProps = (
+  stateProps: StateProps,
+  { dispatch }: { dispatch: Dispatch<AppState> },
+  _: OwnProps,
+): Props => ({
+  ...stateProps,
+  draw: (drawMask: Set<number>) =>
+    dispatch(
+      draw(0, drawMask, stateProps.image.palette.colors.get(
+        stateProps.paletteIndex,
+        [0, 0, 0],
+      ) as Rgb),
+    ),
+  erase: (eraseMask: Set<number>) => dispatch(erase(0, eraseMask)),
+});
+
+const CanvasView = connect(mapStateToProps, mapDispatchToProps, mergeProps)(
+  CanvasViewInternal,
+);
 
 export { CanvasView };
