@@ -124,10 +124,16 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
 
   private onDraw = (ev: React.MouseEvent<HTMLCanvasElement>) => {
     if (ev.buttons === 1 || ev.buttons === 2) {
-      this.maskPixels([
-        Math.floor(ev.nativeEvent.offsetX / 32),
-        Math.floor(ev.nativeEvent.offsetY / 32),
-      ]);
+      const rect = ev.currentTarget.getBoundingClientRect();
+      const { zoom, image } = this.props;
+      const { width, height } = image;
+      const imageCoords: [number, number] = [
+        Math.floor(clamp(0, (ev.clientX - rect.left) / zoom, width)),
+        Math.floor(clamp(0, (ev.clientY - rect.top) / zoom, height)),
+      ];
+      this.maskPixels(imageCoords);
+      // tslint:disable-next-line:no-console
+      console.log(imageCoords);
     }
     if (ev.buttons === 1 /* LMB */) {
       this.setState({ drawMode: "draw" });
@@ -173,6 +179,9 @@ const gridStyle = (zoomFactor: number) => ({
   opacity: (zoomFactor - 4) / 64,
   backgroundSize: `${zoomFactor}px ${zoomFactor}px`,
 });
+
+const clamp = (min: number, val: number, max: number) =>
+  Math.min(Math.max(min, val), max);
 
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
