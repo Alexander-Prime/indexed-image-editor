@@ -56,7 +56,7 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
     const elementWidth = image.width * zoom;
     const elementHeight = image.height * zoom;
     return (
-      <div className="canvasView">
+      <div className="canvasView" onContextMenu={this.onContextMenu}>
         <Fab className="canvasView-gridToggle">
           <Icon className="canvasView-gridToggle-icon" name="grid_on" />
         </Fab>
@@ -71,7 +71,6 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
                 this.ctx = canvas!.getContext("2d")!;
               }
             }}
-            onContextMenu={this.onContextMenu}
             onMouseDown={this.onDraw}
             onMouseMove={this.onDraw}
             onMouseUp={this.onFinishDraw}
@@ -117,12 +116,12 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
     );
   }
 
-  private onContextMenu = (ev: React.MouseEvent<HTMLCanvasElement>) => {
+  private onContextMenu = (ev: React.MouseEvent<HTMLElement>) => {
     ev.preventDefault();
     return false;
   };
 
-  private onDraw = (ev: React.MouseEvent<HTMLCanvasElement>) => {
+  private onDraw = (ev: React.MouseEvent<HTMLElement>) => {
     if (ev.buttons === 1 || ev.buttons === 2) {
       const rect = ev.currentTarget.getBoundingClientRect();
       const { zoom, image } = this.props;
@@ -132,8 +131,6 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
         Math.floor(clamp(0, (ev.clientY - rect.top) / zoom, height)),
       ];
       this.maskPixels(imageCoords);
-      // tslint:disable-next-line:no-console
-      console.log(imageCoords);
     }
     if (ev.buttons === 1 /* LMB */) {
       this.setState({ drawMode: "draw" });
@@ -143,7 +140,7 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
     }
   };
 
-  private onFinishDraw = (_: React.MouseEvent<HTMLCanvasElement>) => {
+  private onFinishDraw = (_: React.MouseEvent<HTMLElement>) => {
     const mask = this.state.drawMask
       .entrySeq()
       .filter(entry => entry[1])
