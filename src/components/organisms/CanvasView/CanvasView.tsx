@@ -75,6 +75,7 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
             onMouseDown={this.onDraw}
             onMouseMove={this.onDraw}
             onMouseUp={this.onFinishDraw}
+            onMouseLeave={this.onFinishDraw}
           />
           <div
             className="canvasView-frame-gridOverlay"
