@@ -197,10 +197,14 @@ const mergeProps = (
   ...stateProps,
   draw: (drawMask: Set<number>) =>
     dispatch(
-      draw(0, drawMask, stateProps.image.palette.colors.get(
-        stateProps.paletteIndex,
-        [0, 0, 0],
-      ) as Rgb),
+      draw(
+        0,
+        drawMask,
+        stateProps.image.palette.colors.get(
+          stateProps.paletteIndex,
+          Rgb(0, 0, 0),
+        ),
+      ),
     ),
   erase: (eraseMask: Set<number>) => dispatch(erase(0, eraseMask)),
 });
