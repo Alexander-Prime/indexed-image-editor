@@ -1,25 +1,30 @@
-import { List, Repeat } from "immutable";
+import { List, Repeat, Set } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
+
+import { Rgb } from "common/types";
 
 import { Fab, Icon } from "components/atoms";
 
 import { AppState } from "data/AppState";
-import { Frame } from "data/Frame";
-import { Image } from "data/Image";
+import { draw, erase, Image } from "data/Image";
 
 import "./CanvasView.scss";
 
 interface StateProps {
   image: Image;
-  frame: Frame;
+  frame: List<number | undefined>;
   zoom: number;
   paletteIndex: number;
 }
 
 interface OwnProps {}
 
-type Props = StateProps & OwnProps;
+interface Props extends StateProps, OwnProps {
+  draw: (drawMask: Set<number>) => void;
+  erase: (eraseMask: Set<number>) => void;
+}
 
 interface State {
   drawMask: List<boolean>;
@@ -70,6 +75,7 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
             onMouseDown={this.onDraw}
             onMouseMove={this.onDraw}
             onMouseUp={this.onFinishDraw}
+            onMouseLeave={this.onFinishDraw}
           />
           <div
             className="canvasView-frame-gridOverlay"
@@ -83,29 +89,26 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   private renderPixels() {
     const { image, frame, paletteIndex } = this.props;
     const bytes = new Uint8ClampedArray(
-      frame.pixels.reduce(
-        (prior: number[], c: number | undefined, i: number) => {
-          const { drawMask, drawMode } = this.state;
-          if (drawMask.get(i)) {
-            if (drawMode === "draw") {
-              prior.push(
-                ...image.palette.colors.get(paletteIndex, [0, 0, 0]),
-                255,
-              );
-            } else {
-              prior.push(0, 0, 0, 0);
-            }
+      frame.reduce((prior: number[], c: number | undefined, i: number) => {
+        const { drawMask, drawMode } = this.state;
+        if (drawMask.get(i)) {
+          if (drawMode === "draw") {
+            prior.push(
+              ...image.palette.colors.get(paletteIndex, [0, 0, 0]),
+              255,
+            );
           } else {
-            if (c === undefined) {
-              prior.push(0, 0, 0, 0);
-            } else {
-              prior.push(...image.palette.colors.get(c, [0, 0, 0]), 255);
-            }
+            prior.push(0, 0, 0, 0);
           }
-          return prior;
-        },
-        [],
-      ),
+        } else {
+          if (c === undefined) {
+            prior.push(0, 0, 0, 0);
+          } else {
+            prior.push(...image.palette.colors.get(c, [0, 0, 0]), 255);
+          }
+        }
+        return prior;
+      }, []),
     );
     this.ctx.putImageData(
       new ImageData(bytes, image.width, image.height),
@@ -135,6 +138,16 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   };
 
   private onFinishDraw = (_: React.MouseEvent<HTMLCanvasElement>) => {
+    const mask = this.state.drawMask
+      .entrySeq()
+      .filter(entry => entry[1])
+      .map(entry => entry[0])
+      .toSet();
+    if (this.state.drawMode === "draw") {
+      this.props.draw(mask);
+    } else {
+      this.props.erase(mask);
+    }
     this.setState({
       drawMask: this.createMask(this.props.image),
     });
@@ -163,11 +176,31 @@ const gridStyle = (zoomFactor: number) => ({
 
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
-  frame: state.image.strip.frames.first()!,
+  frame: state.image.frames.first()!,
   zoom: state.zoom,
   paletteIndex: 0,
 });
 
-const CanvasView = connect(mapStateToProps)(CanvasViewInternal);
+const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({ dispatch });
+
+const mergeProps = (
+  stateProps: StateProps,
+  { dispatch }: { dispatch: Dispatch<AppState> },
+  _: OwnProps,
+): Props => ({
+  ...stateProps,
+  draw: (drawMask: Set<number>) =>
+    dispatch(
+      draw(0, drawMask, stateProps.image.palette.colors.get(
+        stateProps.paletteIndex,
+        [0, 0, 0],
+      ) as Rgb),
+    ),
+  erase: (eraseMask: Set<number>) => dispatch(erase(0, eraseMask)),
+});
+
+const CanvasView = connect(mapStateToProps, mapDispatchToProps, mergeProps)(
+  CanvasViewInternal,
+);
 
 export { CanvasView };
