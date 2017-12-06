@@ -3,7 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { AppState } from "data/AppState";
-import { Frame } from "data/Frame";
 import { Palette } from "data/Palette";
 
 import { FrameView } from "components/molecules";
@@ -11,7 +10,7 @@ import { FrameView } from "components/molecules";
 import "./Strip.scss";
 
 interface StateProps {
-  frames: List<Frame>;
+  frames: List<List<number | undefined>>;
   palette: Palette;
 }
 

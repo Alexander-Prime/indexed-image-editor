@@ -5,14 +5,13 @@ import { connect } from "react-redux";
 import { Fab, Icon } from "components/atoms";
 
 import { AppState } from "data/AppState";
-import { Frame } from "data/Frame";
 import { Image } from "data/Image";
 
 import "./CanvasView.scss";
 
 interface StateProps {
   image: Image;
-  frame: Frame;
+  frame: List<number | undefined>;
   zoom: number;
   paletteIndex: number;
 }
@@ -83,29 +82,26 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   private renderPixels() {
     const { image, frame, paletteIndex } = this.props;
     const bytes = new Uint8ClampedArray(
-      frame.pixels.reduce(
-        (prior: number[], c: number | undefined, i: number) => {
-          const { drawMask, drawMode } = this.state;
-          if (drawMask.get(i)) {
-            if (drawMode === "draw") {
-              prior.push(
-                ...image.palette.colors.get(paletteIndex, [0, 0, 0]),
-                255,
-              );
-            } else {
-              prior.push(0, 0, 0, 0);
-            }
+      frame.reduce((prior: number[], c: number | undefined, i: number) => {
+        const { drawMask, drawMode } = this.state;
+        if (drawMask.get(i)) {
+          if (drawMode === "draw") {
+            prior.push(
+              ...image.palette.colors.get(paletteIndex, [0, 0, 0]),
+              255,
+            );
           } else {
-            if (c === undefined) {
-              prior.push(0, 0, 0, 0);
-            } else {
-              prior.push(...image.palette.colors.get(c, [0, 0, 0]), 255);
-            }
+            prior.push(0, 0, 0, 0);
           }
-          return prior;
-        },
-        [],
-      ),
+        } else {
+          if (c === undefined) {
+            prior.push(0, 0, 0, 0);
+          } else {
+            prior.push(...image.palette.colors.get(c, [0, 0, 0]), 255);
+          }
+        }
+        return prior;
+      }, []),
     );
     this.ctx.putImageData(
       new ImageData(bytes, image.width, image.height),
@@ -163,7 +159,7 @@ const gridStyle = (zoomFactor: number) => ({
 
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
-  frame: state.image.strip.frames.first()!,
+  frame: state.image.frames.first()!,
   zoom: state.zoom,
   paletteIndex: 0,
 });

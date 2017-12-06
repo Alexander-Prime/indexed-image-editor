@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { CanvasView, Sidebar, StripView } from "components/organisms";
+import { CanvasView, Sidebar, Strip } from "components/organisms";
 
 import { AppState } from "data/AppState";
 import { Theme } from "data/Theme";
@@ -27,7 +27,7 @@ const EditorPageInternal = (props: Props) => (
   >
     <CanvasView />
     <Sidebar />
-    <StripView />
+    <Strip />
   </div>
 );
 
