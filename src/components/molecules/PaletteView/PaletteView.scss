@@ -1,5 +1,20 @@
+@import "~common/styles/dimens";
+
 .palette {
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
+  padding: $list-padding-vertical 0;
+
+  &-colors {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 24px);
+    grid-auto-rows: 24px;
+    padding: $list-padding-vertical $list-padding-horizontal;
+
+    &-divider {
+      grid-column: 1 / -1;
+    }
+  }
 }

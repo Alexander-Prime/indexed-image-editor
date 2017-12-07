@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import React from "react";
 
-import { RampView } from "components/molecules";
+import { Swatch } from "components/atoms";
+import { RampHeading } from "components/molecules";
 
 import { Palette } from "data/Palette";
 
@@ -15,17 +16,23 @@ interface Props {
 const PaletteView = (props: Props) => (
   <div className={classNames("palette", props.className)}>
     <header className="palette-header">Palette</header>
-    {props.palette.ramps
-      .entrySeq()
-      .map(entry => (
-        <RampView
-          className="palette-ramp"
-          key={`${entry[1].name}@${entry[0]}`}
-          palette={props.palette}
-          index={entry[0]}
-          ramp={entry[1]}
-        />
-      ))}
+    <div className="palette-colors">
+      {props.palette.colors.map((color, i) => {
+        const ramp = props.palette.ramps.get(i);
+        return [
+          ramp && (
+            <RampHeading
+              className="palette-colors-divider"
+              key={`${ramp.name}@${i}`}
+              palette={props.palette}
+              index={i}
+              ramp={ramp}
+            />
+          ),
+          <Swatch key={i} color={color} />,
+        ];
+      })}
+    </div>
   </div>
 );
 

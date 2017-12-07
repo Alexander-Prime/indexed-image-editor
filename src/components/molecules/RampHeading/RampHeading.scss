@@ -1,0 +1,13 @@
+@import "~common/styles/dimens";
+
+.rampHeading {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  &-name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
