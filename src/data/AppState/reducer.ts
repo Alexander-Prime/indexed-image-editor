@@ -8,6 +8,7 @@ const reducer = combineReducers<AppState>({
   theme: (_: any) => _,
   image,
   zoom: (_: any) => _,
+  selectedColor: (_: any) => _,
 });
 
 export { reducer };

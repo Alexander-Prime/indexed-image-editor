@@ -3,6 +3,8 @@ import React from "react";
 
 import { Rgb } from "common/types";
 
+import "./Swatch.scss";
+
 interface Props {
   className?: string;
   color: Rgb;
@@ -11,7 +13,9 @@ interface Props {
 const Swatch = (props: Props) => (
   <div
     className={classNames("swatch", props.className)}
-    style={{ background: Rgb.toHex(props.color) }}
+    style={{
+      "--swatch-color": Rgb.toHex(props.color),
+    }}
   />
 );
 

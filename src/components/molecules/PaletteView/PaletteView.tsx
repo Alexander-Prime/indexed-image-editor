@@ -11,6 +11,7 @@ import "./PaletteView.scss";
 interface Props {
   className?: string;
   palette: Palette;
+  selectedColor: number;
 }
 
 const PaletteView = (props: Props) => (
@@ -29,7 +30,13 @@ const PaletteView = (props: Props) => (
               ramp={ramp}
             />
           ),
-          <Swatch key={i} color={color} />,
+          <Swatch
+            className={classNames("palette-colors-swatch", {
+              "is-selected": props.selectedColor === i,
+            })}
+            key={i}
+            color={color}
+          />,
         ];
       })}
     </div>
