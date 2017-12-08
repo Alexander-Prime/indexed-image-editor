@@ -16,7 +16,7 @@ interface StateProps {
   image: Image;
   frame: List<number | undefined>;
   zoom: number;
-  paletteIndex: number;
+  selectedColor: number;
 }
 
 interface OwnProps {}
@@ -86,14 +86,14 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   }
 
   private renderPixels() {
-    const { image, frame, paletteIndex } = this.props;
+    const { image, frame, selectedColor } = this.props;
     const bytes = new Uint8ClampedArray(
       frame.reduce((prior: number[], c: number | undefined, i: number) => {
         const { drawMask, drawMode } = this.state;
         if (drawMask.get(i)) {
           if (drawMode === "draw") {
             prior.push(
-              ...image.palette.colors.get(paletteIndex, [0, 0, 0]),
+              ...image.palette.colors.get(selectedColor, [0, 0, 0]),
               255,
             );
           } else {
@@ -184,7 +184,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
   frame: state.image.frames.first()!,
   zoom: state.zoom,
-  paletteIndex: 0,
+  selectedColor: state.selectedColor,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({ dispatch });
@@ -196,16 +196,7 @@ const mergeProps = (
 ): Props => ({
   ...stateProps,
   draw: (drawMask: Set<number>) =>
-    dispatch(
-      draw(
-        0,
-        drawMask,
-        stateProps.image.palette.colors.get(
-          stateProps.paletteIndex,
-          Rgb(0, 0, 0),
-        ),
-      ),
-    ),
+    dispatch(draw(0, drawMask, stateProps.selectedColor)),
   erase: (eraseMask: Set<number>) => dispatch(erase(0, eraseMask)),
 });
 

@@ -6,9 +6,9 @@ import { Image } from "./model";
 const reducer = (state: Image = new Image(), action: Action): Image => {
   switch (action.type) {
     case ActionTypes.DRAW: {
-      const { frameIndex, drawMask, color } = action.payload;
+      const { frameIndex, drawMask, colorIndex } = action.payload;
       return state.updateIn(["frames", frameIndex], (frame: List<number>) =>
-        frame.map((c, i) => (drawMask.has(i) ? color : c)),
+        frame.map((c, i) => (drawMask.has(i) ? colorIndex : c)),
       );
     }
     case ActionTypes.ERASE: {
