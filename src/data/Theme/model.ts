@@ -7,7 +7,7 @@ interface ThemeProps {
 }
 
 class Theme extends Record<ThemeProps>({
-  backgroundColor: "#181818",
+  backgroundColor: "#243c4b",
   foregroundColor: "#e0e0e0",
   gridColor: "rgba(255, 255, 255, 0.6)",
 }) {}
