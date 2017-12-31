@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { AppState } from "data/AppState";
 import { Palette } from "data/Palette";
 
-import { FrameView } from "components/molecules";
+import { Frame } from "components/molecules";
 
 import "./Strip.scss";
 
@@ -19,8 +19,10 @@ interface OwnProps {}
 type Props = StateProps & OwnProps;
 
 const StripInternal = (props: Props) => (
-  <div className="stripView">
-    {props.frames.map((frame, i) => <FrameView frame={frame} key={i} />)}
+  <div className="strip">
+    {props.frames.map((frame, i) => (
+      <Frame className="strip-frame" frame={frame} key={i} />
+    ))}
   </div>
 );
 

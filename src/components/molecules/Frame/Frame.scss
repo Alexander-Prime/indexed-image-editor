@@ -1,0 +1,12 @@
+.frame {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+
+  &-thumbnail {
+    flex: 0 0 128px;
+    align-self: stretch;
+    outline: solid thin white;
+  }
+}
