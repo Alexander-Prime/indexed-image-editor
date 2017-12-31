@@ -3,8 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Rgb } from "common/types";
-
 import { Fab, Icon } from "components/atoms";
 
 import { AppState } from "data/AppState";

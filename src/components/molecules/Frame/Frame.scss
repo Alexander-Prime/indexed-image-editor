@@ -6,7 +6,12 @@
 
   &-thumbnail {
     flex: 0 0 128px;
+    width: 128px;
     align-self: stretch;
     outline: solid thin white;
+
+    &.mod-small {
+      image-rendering: pixelated;
+    }
   }
 }
