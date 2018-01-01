@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { CanvasView, Sidebar, Strip } from "components/organisms";
+import { DrawArea, Sidebar, Strip } from "components/organisms";
 
 import { AppState } from "data/AppState";
 import { Theme } from "data/Theme";
@@ -25,7 +25,7 @@ const EditorPageInternal = (props: Props) => (
       "--color-grid": props.theme.gridColor,
     }}
   >
-    <CanvasView />
+    <DrawArea className="editorPage-drawArea" />
     <Sidebar />
     <Strip />
   </div>

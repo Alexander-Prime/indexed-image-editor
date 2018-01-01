@@ -6,9 +6,13 @@
   grid-template-rows: 200px 1fr;
   grid-template-columns: 1fr 400px;
   grid-template-areas:
-    "strip  sidebar"
-    "canvas sidebar";
+    "strip sidebar"
+    "draw  sidebar";
 
   background: var(--color-bg);
   color: var(--color-fg);
+
+  &-drawArea {
+    grid-area: draw;
+  }
 }

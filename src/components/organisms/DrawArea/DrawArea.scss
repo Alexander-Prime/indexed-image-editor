@@ -1,0 +1,21 @@
+.drawArea {
+  position: relative;
+
+  &-scrollWindow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
+
+  &-gridToggle {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+  }
+}

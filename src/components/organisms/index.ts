@@ -1,3 +1,3 @@
-export { CanvasView } from "./CanvasView";
+export { DrawArea } from "./DrawArea";
 export { Sidebar } from "./Sidebar";
 export { Strip } from "./Strip";

@@ -4,17 +4,7 @@ import { Palette } from "data/Palette";
 
 const defaultWidth = 8;
 const defaultHeight = 8;
-const x = undefined;
-const defaultData = [
-  [x, x, 0, 0, 0, 0, x, x],
-  [x, 0, x, x, x, x, 0, x],
-  [0, x, x, x, x, x, x, 0],
-  [0, x, x, x, x, x, x, 0],
-  [0, x, x, x, x, x, x, 0],
-  [0, x, x, x, x, x, x, 0],
-  [x, 0, x, x, x, x, 0, x],
-  [x, x, 0, 0, 0, 0, x, x],
-].reduce((prior, current) => prior.concat(...current));
+const defaultFrame = List().setSize(defaultWidth * defaultHeight);
 
 interface ImageProps {
   width: number;
@@ -26,7 +16,7 @@ interface ImageProps {
 class Image extends Record<ImageProps>({
   width: defaultWidth,
   height: defaultHeight,
-  frames: List.of(List.of(...defaultData)),
+  frames: List.of(defaultFrame),
   palette: new Palette(),
 }) {}
 

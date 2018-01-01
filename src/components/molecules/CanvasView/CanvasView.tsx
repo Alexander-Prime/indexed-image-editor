@@ -3,8 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Fab, Icon } from "components/atoms";
-
 import { AppState } from "data/AppState";
 import { draw, erase, Image } from "data/Image";
 
@@ -17,7 +15,9 @@ interface StateProps {
   selectedColor: number;
 }
 
-interface OwnProps {}
+interface OwnProps {
+  className?: string;
+}
 
 interface Props extends StateProps, OwnProps {
   draw: (drawMask: Set<number>) => void;
@@ -55,30 +55,22 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
     const elementHeight = image.height * zoom;
     return (
       <div className="canvasView" onContextMenu={this.onContextMenu}>
-        <Fab className="canvasView-gridToggle">
-          <Icon className="canvasView-gridToggle-icon" name="grid_on" />
-        </Fab>
-        <div className="canvasView-frame">
-          <canvas
-            className="canvasView-frame-canvas"
-            width={image.width}
-            height={image.height}
-            style={{ width: elementWidth, height: elementHeight }}
-            ref={canvas => {
-              if (canvas) {
-                this.ctx = canvas!.getContext("2d")!;
-              }
-            }}
-            onMouseDown={this.onDraw}
-            onMouseMove={this.onDraw}
-            onMouseUp={this.onFinishDraw}
-            onMouseLeave={this.onFinishDraw}
-          />
-          <div
-            className="canvasView-frame-gridOverlay"
-            style={gridStyle(zoom)}
-          />
-        </div>
+        <canvas
+          className="canvasView-canvas"
+          width={image.width}
+          height={image.height}
+          style={{ width: elementWidth, height: elementHeight }}
+          ref={canvas => {
+            if (canvas) {
+              this.ctx = canvas!.getContext("2d")!;
+            }
+          }}
+          onMouseDown={this.onDraw}
+          onMouseMove={this.onDraw}
+          onMouseUp={this.onFinishDraw}
+          onMouseLeave={this.onFinishDraw}
+        />
+        <div className="canvasView-grid" style={gridStyle(zoom)} />
       </div>
     );
   }
