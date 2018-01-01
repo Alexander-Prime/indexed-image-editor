@@ -17,6 +17,20 @@ const reducer = (state: Image = new Image(), action: Action): Image => {
         frame.map((c, i) => (eraseMask.has(i) ? undefined : c)),
       );
     }
+    case ActionTypes.APPEND_FRAME: {
+      return state.updateIn(["frames"], (frames: List<List<number>>) =>
+        frames.push(
+          frames.last() || List().setSize(state.width * state.height),
+        ),
+      );
+    }
+    case ActionTypes.PREPEND_FRAME: {
+      return state.updateIn(["frames"], (frames: List<List<number>>) =>
+        frames.unshift(
+          frames.first() || List().setSize(state.width * state.height),
+        ),
+      );
+    }
     default: {
       return state;
     }

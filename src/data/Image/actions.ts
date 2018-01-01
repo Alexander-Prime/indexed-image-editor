@@ -3,8 +3,10 @@ import { Set } from "immutable";
 const enum ActionTypes {
   DRAW = "[Image] Draw",
   ERASE = "[Image] Erase",
+  APPEND_FRAME = "[Image] Append frame",
+  PREPEND_FRAME = "[Image] Prepend frame",
 }
-type Action = DrawAction | EraseAction;
+type Action = DrawAction | EraseAction | AppendFrameAction | PrependFrameAction;
 
 interface DrawAction {
   type: ActionTypes.DRAW;
@@ -28,5 +30,19 @@ const erase = (frameIndex: number, eraseMask: Set<number>): Action => ({
   payload: { frameIndex, eraseMask },
 });
 
+interface AppendFrameAction {
+  type: ActionTypes.APPEND_FRAME;
+}
+const appendFrame = (): Action => ({
+  type: ActionTypes.APPEND_FRAME,
+});
+
+interface PrependFrameAction {
+  type: ActionTypes.PREPEND_FRAME;
+}
+const prependFrame = (): Action => ({
+  type: ActionTypes.PREPEND_FRAME,
+});
+
 export { Action, ActionTypes };
-export { draw, erase };
+export { draw, erase, appendFrame, prependFrame };

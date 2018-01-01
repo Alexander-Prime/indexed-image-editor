@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
+import { Icon } from "components/atoms";
 import { Frame } from "components/molecules";
 
 import { AppState } from "data/AppState";
-import { Image } from "data/Image";
+import { Image, prependFrame, appendFrame } from "data/Image";
 
 import "./Strip.scss";
 
@@ -12,27 +14,43 @@ interface StateProps {
   image: Image;
 }
 
+interface DispatchProps {
+  prependFrame: () => void;
+  appendFrame: () => void;
+}
+
 interface OwnProps {}
 
-type Props = StateProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps;
 
-const StripInternal = (props: Props) => (
-  <div className="strip">
-    {props.image.frames.map((frame, i) => (
-      <Frame
-        className="strip-frame"
-        image={props.image}
-        frame={frame}
-        key={i}
-      />
-    ))}
-  </div>
-);
+class StripInternal extends React.PureComponent<Props> {
+  render() {
+    const { image, prependFrame, appendFrame } = this.props;
+    return (
+      <div className="strip">
+        <button className="strip-addButton" onClick={prependFrame}>
+          <Icon name="add" />
+        </button>
+        {image.frames.map((frame, i) => (
+          <Frame className="strip-frame" image={image} frame={frame} key={i} />
+        ))}
+        <button className="strip-addButton" onClick={appendFrame}>
+          <Icon name="add" />
+        </button>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
 });
 
-const Strip = connect(mapStateToProps)(StripInternal);
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
+  appendFrame: () => dispatch(appendFrame()),
+  prependFrame: () => dispatch(prependFrame()),
+});
+
+const Strip = connect(mapStateToProps, mapDispatchToProps)(StripInternal);
 
 export { Strip };

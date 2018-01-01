@@ -8,6 +8,12 @@
   flex-flow: row nowrap;
   justify-content: center;
 
+  &-addButton {
+    padding: 24px;
+    margin: 24px;
+    align-self: center;
+  }
+
   &-frame {
     flex: 0 0 128px;
   }
