@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { List, Repeat, Set } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
@@ -50,11 +51,14 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { image, zoom } = this.props;
+    const { className, image, zoom } = this.props;
     const elementWidth = image.width * zoom;
     const elementHeight = image.height * zoom;
     return (
-      <div className="canvasView" onContextMenu={this.onContextMenu}>
+      <div
+        className={classNames("canvasView", className)}
+        onContextMenu={this.onContextMenu}
+      >
         <canvas
           className="canvasView-canvas"
           width={image.width}
@@ -182,9 +186,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({ dispatch });
 const mergeProps = (
   stateProps: StateProps,
   { dispatch }: { dispatch: Dispatch<AppState> },
-  _: OwnProps,
+  ownProps: OwnProps,
 ): Props => ({
   ...stateProps,
+  ...ownProps,
   draw: (drawMask: Set<number>) =>
     dispatch(draw(0, drawMask, stateProps.selectedColor)),
   erase: (eraseMask: Set<number>) => dispatch(erase(0, eraseMask)),
