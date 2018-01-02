@@ -21,12 +21,12 @@ const keyMap = {
   playPause: ["space", "0"],
   zoomIn: ["w", "i"],
   zoomOut: ["s", "k"],
-  frameBack: ["a", "j"],
-  frameForward: ["d", "l"],
-  shiftFrameBack: { sequence: ["q", "u"], action: "keydown" },
-  unshiftFrameBack: { sequence: ["q", "u"], action: "keyup" },
-  shiftFrameForward: { sequence: ["e", "o"], action: "keydown" },
-  unshiftFrameForward: { sequence: ["e", "o"], action: "keyup" },
+  stepBack: ["a", "j"],
+  stepForward: ["d", "l"],
+  shiftBack: { sequence: ["q", "u"], action: "keydown" },
+  unshiftBack: { sequence: ["q", "u"], action: "keyup" },
+  shiftForward: { sequence: ["e", "o"], action: "keydown" },
+  unshiftForward: { sequence: ["e", "o"], action: "keyup" },
 };
 
 const EditorPageInternal = (props: Props) => (
