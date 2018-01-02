@@ -1,4 +1,5 @@
 import React from "react";
+import { HotKeys } from "react-hotkeys";
 import { connect } from "react-redux";
 
 import { DrawArea, Sidebar, Strip } from "components/organisms";
@@ -16,19 +17,33 @@ interface OwnProps {}
 
 type Props = StateProps & OwnProps;
 
+const keyMap = {
+  playPause: ["space", "0"],
+  zoomIn: ["w", "i"],
+  zoomOut: ["s", "k"],
+  frameBack: ["a", "j"],
+  frameForward: ["d", "l"],
+  shiftFrameBack: { sequence: ["q", "u"], action: "keydown" },
+  unshiftFrameBack: { sequence: ["q", "u"], action: "keyup" },
+  shiftFrameForward: { sequence: ["e", "o"], action: "keydown" },
+  unshiftFrameForward: { sequence: ["e", "o"], action: "keyup" },
+};
+
 const EditorPageInternal = (props: Props) => (
-  <div
-    className="editorPage"
-    style={{
-      "--color-bg": props.theme.backgroundColor,
-      "--color-fg": props.theme.foregroundColor,
-      "--color-grid": props.theme.gridColor,
-    }}
-  >
-    <DrawArea className="editorPage-drawArea" />
-    <Sidebar />
-    <Strip />
-  </div>
+  <HotKeys keyMap={keyMap} focused>
+    <div
+      className="editorPage"
+      style={{
+        "--color-bg": props.theme.backgroundColor,
+        "--color-fg": props.theme.foregroundColor,
+        "--color-grid": props.theme.gridColor,
+      }}
+    >
+      <DrawArea className="editorPage-drawArea" />
+      <Sidebar />
+      <Strip />
+    </div>
+  </HotKeys>
 );
 
 const mapStateToProps = (state: AppState): StateProps => ({
