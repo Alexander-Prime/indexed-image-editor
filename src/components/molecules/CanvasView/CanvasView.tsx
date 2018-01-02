@@ -14,6 +14,7 @@ interface StateProps {
   frame: List<number | undefined>;
   zoom: number;
   selectedColor: number;
+  currentFrame: number;
 }
 
 interface OwnProps {
@@ -176,9 +177,10 @@ const clamp = (min: number, val: number, max: number) =>
 
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
-  frame: state.image.frames.first()!,
+  frame: state.image.frames.get(state.currentFrame)!,
   zoom: state.zoom,
   selectedColor: state.selectedColor,
+  currentFrame: state.currentFrame,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>) => ({ dispatch });
@@ -191,8 +193,9 @@ const mergeProps = (
   ...stateProps,
   ...ownProps,
   draw: (drawMask: Set<number>) =>
-    dispatch(draw(0, drawMask, stateProps.selectedColor)),
-  erase: (eraseMask: Set<number>) => dispatch(erase(0, eraseMask)),
+    dispatch(draw(stateProps.currentFrame, drawMask, stateProps.selectedColor)),
+  erase: (eraseMask: Set<number>) =>
+    dispatch(erase(stateProps.currentFrame, eraseMask)),
 });
 
 const CanvasView = connect(mapStateToProps, mapDispatchToProps, mergeProps)(

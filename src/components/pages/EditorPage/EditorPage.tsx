@@ -4,18 +4,23 @@ import { connect } from "react-redux";
 
 import { DrawArea, Sidebar, Strip } from "components/organisms";
 
-import { AppState } from "data/AppState";
+import { AppState, stepBack, stepForward } from "data/AppState";
 import { Theme } from "data/Theme";
 
 import "./EditorPage.scss";
+import { Dispatch } from "redux";
 
 interface StateProps {
   theme: Theme;
 }
 
+interface DispatchProps {
+  handlers: { [action: string]: () => void };
+}
+
 interface OwnProps {}
 
-type Props = StateProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps;
 
 const keyMap = {
   playPause: ["space", "0"],
@@ -30,7 +35,7 @@ const keyMap = {
 };
 
 const EditorPageInternal = (props: Props) => (
-  <HotKeys keyMap={keyMap} focused>
+  <HotKeys keyMap={keyMap} handlers={props.handlers} focused>
     <div
       className="editorPage"
       style={{
@@ -50,6 +55,15 @@ const mapStateToProps = (state: AppState): StateProps => ({
   theme: state.theme,
 });
 
-const EditorPage = connect(mapStateToProps)(EditorPageInternal);
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
+  handlers: {
+    stepBack: () => dispatch(stepBack()),
+    stepForward: () => dispatch(stepForward()),
+  },
+});
+
+const EditorPage = connect(mapStateToProps, mapDispatchToProps)(
+  EditorPageInternal,
+);
 
 export { EditorPage };
