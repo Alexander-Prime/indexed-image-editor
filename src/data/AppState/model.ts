@@ -8,6 +8,7 @@ interface AppStateProps {
   theme: Theme;
   zoom: number;
   selectedColor: number;
+  currentFrame: number;
 }
 
 class AppState extends Record<AppStateProps>({
@@ -15,6 +16,7 @@ class AppState extends Record<AppStateProps>({
   theme: new Theme(),
   zoom: 32,
   selectedColor: 0,
+  currentFrame: 0,
 }) {}
 
 export { AppState };

@@ -16,11 +16,14 @@ const ownReducer = (state: AppState, action: Action) => {
   }
 };
 
+const identity = (_: any) => _;
+
 const childReducer = combineReducers<AppState>({
-  theme: (_: any) => _,
+  theme: identity,
   image,
-  zoom: (_: any) => _,
-  selectedColor: (_: any) => _,
+  zoom: identity,
+  selectedColor: identity,
+  currentFrame: identity,
 });
 
 const reducer = (state: AppState, action: Action) => {

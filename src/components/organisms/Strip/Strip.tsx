@@ -12,6 +12,7 @@ import "./Strip.scss";
 
 interface StateProps {
   image: Image;
+  currentFrame: number;
 }
 
 interface DispatchProps {
@@ -25,14 +26,22 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 class StripInternal extends React.PureComponent<Props> {
   render() {
-    const { image, prependFrame, appendFrame } = this.props;
+    const { currentFrame, image, prependFrame, appendFrame } = this.props;
     return (
       <div className="strip">
         <button className="strip-addButton" onClick={prependFrame}>
           <Icon name="add" />
         </button>
         {image.frames.map((frame, i) => (
-          <Frame className="strip-frame" image={image} frame={frame} key={i} />
+          <Frame
+            className="strip-frame"
+            image={image}
+            frame={frame}
+            key={i}
+            index={i}
+            selected={i === currentFrame}
+            visible={i === currentFrame}
+          />
         ))}
         <button className="strip-addButton" onClick={appendFrame}>
           <Icon name="add" />
@@ -44,6 +53,7 @@ class StripInternal extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: AppState): StateProps => ({
   image: state.image,
+  currentFrame: state.currentFrame,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({

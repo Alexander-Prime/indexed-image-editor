@@ -8,9 +8,14 @@
     right: 0;
     bottom: 0;
     overflow: scroll;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+    display: flex;
+    // display: grid;
+    // justify-items: center;
+    // align-items: center;
+
+    &-canvas {
+      margin: auto;
+    }
   }
 
   &-gridToggle {

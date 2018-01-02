@@ -1,17 +1,30 @@
 .frame {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
+  padding: 0 8px;
 
   &-thumbnail {
     flex: 0 0 128px;
     width: 128px;
     align-self: stretch;
-    outline: solid thin white;
+    border: solid thin rgba(255, 255, 255, 0.3);
 
     &.mod-small {
       image-rendering: pixelated;
+    }
+
+    &.is-selected {
+      border-color: white;
+    }
+  }
+
+  &-indicator {
+    opacity: 0;
+
+    &.is-visible {
+      opacity: 1;
     }
   }
 }

@@ -12,6 +12,9 @@ interface Props {
   className?: string;
   frame: List<number | undefined>;
   image: Image;
+  index: number;
+  selected: boolean;
+  visible: boolean;
 }
 
 class Frame extends React.PureComponent<Props> {
@@ -26,14 +29,15 @@ class Frame extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, image } = this.props;
+    const { className, image, index, selected, visible } = this.props;
     const { width, height } = image;
     return (
       <div className={classNames("frame", className)}>
-        <div className="frame-number">1</div>
+        <div className="frame-number">{index + 1}</div>
         <canvas
           className={classNames("frame-thumbnail", {
             "mod-small": width < 128 && height < 128,
+            "is-selected": selected,
           })}
           width={width}
           height={height}
@@ -43,7 +47,10 @@ class Frame extends React.PureComponent<Props> {
             }
           }}
         />
-        <Icon className="frame-indicator" name="arrow_drop_up" />
+        <Icon
+          className={classNames("frame-indicator", { "is-visible": visible })}
+          name="arrow_drop_up"
+        />
       </div>
     );
   }

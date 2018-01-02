@@ -2,8 +2,8 @@ import { List, Record } from "immutable";
 
 import { Palette } from "data/Palette";
 
-const defaultWidth = 8;
-const defaultHeight = 8;
+const defaultWidth = 32;
+const defaultHeight = 32;
 const defaultFrame = List().setSize(defaultWidth * defaultHeight);
 
 interface ImageProps {

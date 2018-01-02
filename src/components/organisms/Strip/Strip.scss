@@ -5,13 +5,19 @@
   background: var(--color-bg);
 
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  overflow-x: auto;
 
   &-addButton {
-    padding: 24px;
-    margin: 24px;
+    padding: 48px;
     align-self: center;
+
+    &:first-child {
+      margin-left: auto;
+    }
+
+    &:last-child {
+      margin-right: auto;
+    }
   }
 
   &-frame {
