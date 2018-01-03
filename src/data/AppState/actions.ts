@@ -1,9 +1,18 @@
 const enum ActionTypes {
   PICK_COLOR = "[AppState] Pick color",
-  STEP_BACK = "[AppState] Step back",
-  STEP_FORWARD = "[AppState] Step forward",
+  SET_CURRENT_FRAME = "[AppState] Set current frame",
+  SHIFT_BACK = "[AppState] Shift back",
+  UNSHIFT_BACK = "[AppState] Unshift back",
+  SHIFT_FORWARD = "[AppState] Shift forward",
+  UNSHIFT_FORWARD = "[AppState] Unshift forward",
 }
-type Action = PickColorAction | StepBackAction | StepForwardAction;
+type Action =
+  | PickColorAction
+  | SetCurrentFrameAction
+  | ShiftBackAction
+  | UnshiftBackAction
+  | ShiftForwardAction
+  | UnshiftForwardAction;
 
 interface PickColorAction {
   type: ActionTypes.PICK_COLOR;
@@ -14,19 +23,49 @@ const pickColor = (index: number): Action => ({
   payload: { index },
 });
 
-interface StepBackAction {
-  type: ActionTypes.STEP_BACK;
+interface SetCurrentFrameAction {
+  type: ActionTypes.SET_CURRENT_FRAME;
+  payload: { frameIndex: number };
 }
-const stepBack = (): Action => ({
-  type: ActionTypes.STEP_BACK,
+const setCurrentFrame = (frameIndex: number): Action => ({
+  type: ActionTypes.SET_CURRENT_FRAME,
+  payload: { frameIndex },
 });
 
-interface StepForwardAction {
-  type: ActionTypes.STEP_FORWARD;
+interface ShiftBackAction {
+  type: ActionTypes.SHIFT_BACK;
 }
-const stepForward = (): Action => ({
-  type: ActionTypes.STEP_FORWARD,
+const shiftBack = (): Action => ({
+  type: ActionTypes.SHIFT_BACK,
+});
+
+interface UnshiftBackAction {
+  type: ActionTypes.UNSHIFT_BACK;
+}
+const unshiftBack = (): Action => ({
+  type: ActionTypes.UNSHIFT_BACK,
+});
+
+interface ShiftForwardAction {
+  type: ActionTypes.SHIFT_FORWARD;
+}
+const shiftForward = (): Action => ({
+  type: ActionTypes.SHIFT_FORWARD,
+});
+
+interface UnshiftForwardAction {
+  type: ActionTypes.UNSHIFT_FORWARD;
+}
+const unshiftForward = (): Action => ({
+  type: ActionTypes.UNSHIFT_FORWARD,
 });
 
 export { Action, ActionTypes };
-export { pickColor, stepBack, stepForward };
+export {
+  pickColor,
+  setCurrentFrame,
+  shiftBack,
+  unshiftBack,
+  shiftForward,
+  unshiftForward,
+};

@@ -10,14 +10,8 @@ const ownReducer = (state: AppState, action: Action) => {
     case ActionTypes.PICK_COLOR: {
       return state.set("selectedColor", action.payload.index);
     }
-    case ActionTypes.STEP_BACK: {
-      return state.set("currentFrame", Math.max(state.currentFrame - 1, 0));
-    }
-    case ActionTypes.STEP_FORWARD: {
-      return state.set(
-        "currentFrame",
-        Math.min(state.currentFrame + 1, state.image.frames.size - 1),
-      );
+    case ActionTypes.SET_CURRENT_FRAME: {
+      return state.set("currentFrame", action.payload.frameIndex);
     }
     default: {
       return state;
@@ -33,6 +27,8 @@ const childReducer = combineReducers<AppState>({
   zoom: identity,
   selectedColor: identity,
   currentFrame: identity,
+  shiftBack: identity,
+  shiftForward: identity,
 });
 
 const reducer = (state: AppState, action: Action) => {

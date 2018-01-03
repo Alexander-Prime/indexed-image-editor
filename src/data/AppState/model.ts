@@ -9,6 +9,8 @@ interface AppStateProps {
   zoom: number;
   selectedColor: number;
   currentFrame: number;
+  shiftBack: boolean;
+  shiftForward: boolean;
 }
 
 class AppState extends Record<AppStateProps>({
@@ -17,6 +19,8 @@ class AppState extends Record<AppStateProps>({
   zoom: 32,
   selectedColor: 0,
   currentFrame: 0,
+  shiftBack: false,
+  shiftForward: false,
 }) {}
 
 export { AppState };

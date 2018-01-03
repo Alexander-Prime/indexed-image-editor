@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 
 import { DrawArea, Sidebar, Strip } from "components/organisms";
 
-import { AppState, stepBack, stepForward } from "data/AppState";
+import { AppState, setCurrentFrame } from "data/AppState";
+import { appendFrame, Image, prependFrame } from "data/Image";
 import { Theme } from "data/Theme";
 
 import "./EditorPage.scss";
@@ -12,13 +13,17 @@ import { Dispatch } from "redux";
 
 interface StateProps {
   theme: Theme;
+  image: Image;
+  currentFrame: number;
 }
 
 interface DispatchProps {
-  handlers: { [action: string]: () => void };
+  dispatch: Dispatch<any>;
 }
 
-interface OwnProps {}
+interface OwnProps {
+  handlers: { [action: string]: () => void };
+}
 
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -34,32 +39,57 @@ const keyMap = {
   unshiftForward: { sequence: ["e", "o"], action: "keyup" },
 };
 
-const EditorPageInternal = (props: Props) => (
-  <HotKeys keyMap={keyMap} handlers={props.handlers} focused>
-    <div
-      className="editorPage"
-      style={{
-        "--color-bg": props.theme.backgroundColor,
-        "--color-fg": props.theme.foregroundColor,
-        "--color-grid": props.theme.gridColor,
-      }}
-    >
-      <DrawArea className="editorPage-drawArea" />
-      <Sidebar />
-      <Strip />
-    </div>
-  </HotKeys>
-);
+class EditorPageInternal extends React.PureComponent<Props> {
+  private handlers = {
+    stepBack: this.stepBack.bind(this),
+    stepForward: this.stepForward.bind(this),
+  };
+
+  render() {
+    const { theme } = this.props;
+    return (
+      <HotKeys keyMap={keyMap} handlers={this.handlers} focused>
+        <div
+          className="editorPage"
+          style={{
+            "--color-bg": theme.backgroundColor,
+            "--color-fg": theme.foregroundColor,
+            "--color-grid": theme.gridColor,
+          }}
+        >
+          <DrawArea className="editorPage-drawArea" />
+          <Sidebar />
+          <Strip />
+        </div>
+      </HotKeys>
+    );
+  }
+
+  private stepBack() {
+    const { currentFrame, dispatch } = this.props;
+    if (currentFrame === 0) {
+      dispatch(prependFrame());
+    }
+    dispatch(setCurrentFrame(Math.max(currentFrame - 1, 0)));
+  }
+
+  private stepForward() {
+    const { currentFrame, dispatch, image } = this.props;
+    if (currentFrame === image.frames.size - 1) {
+      dispatch(appendFrame());
+    }
+    dispatch(setCurrentFrame(currentFrame + 1));
+  }
+}
 
 const mapStateToProps = (state: AppState): StateProps => ({
   theme: state.theme,
+  currentFrame: state.currentFrame,
+  image: state.image,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
-  handlers: {
-    stepBack: () => dispatch(stepBack()),
-    stepForward: () => dispatch(stepForward()),
-  },
+  dispatch,
 });
 
 const EditorPage = connect(mapStateToProps, mapDispatchToProps)(
