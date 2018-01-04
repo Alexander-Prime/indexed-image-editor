@@ -16,7 +16,7 @@ interface AppStateProps {
 class AppState extends Record<AppStateProps>({
   image: new Image(),
   theme: new Theme(),
-  zoom: 32,
+  zoom: 16,
   selectedColor: 0,
   currentFrame: 0,
   shiftBack: false,

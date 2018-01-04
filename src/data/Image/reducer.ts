@@ -31,6 +31,12 @@ const reducer = (state: Image = new Image(), action: Action): Image => {
         ),
       );
     }
+    case ActionTypes.CYCLE_BACK: {
+      return state;
+    }
+    case ActionTypes.CYCLE_FORWARD: {
+      return state;
+    }
     default: {
       return state;
     }

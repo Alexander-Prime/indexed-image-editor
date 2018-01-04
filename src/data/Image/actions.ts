@@ -5,8 +5,16 @@ const enum ActionTypes {
   ERASE = "[Image] Erase",
   APPEND_FRAME = "[Image] Append frame",
   PREPEND_FRAME = "[Image] Prepend frame",
+  CYCLE_BACK = "[Image] Cycle back",
+  CYCLE_FORWARD = "[Image] Cycle forward",
 }
-type Action = DrawAction | EraseAction | AppendFrameAction | PrependFrameAction;
+type Action =
+  | DrawAction
+  | EraseAction
+  | AppendFrameAction
+  | PrependFrameAction
+  | CycleBackAction
+  | CycleForwardAction;
 
 interface DrawAction {
   type: ActionTypes.DRAW;
@@ -44,5 +52,19 @@ const prependFrame = (): Action => ({
   type: ActionTypes.PREPEND_FRAME,
 });
 
+interface CycleBackAction {
+  type: ActionTypes.CYCLE_BACK;
+}
+const cycleBack = (): Action => ({
+  type: ActionTypes.CYCLE_BACK,
+});
+
+interface CycleForwardAction {
+  type: ActionTypes.CYCLE_FORWARD;
+}
+const cycleForward = (): Action => ({
+  type: ActionTypes.CYCLE_FORWARD,
+});
+
 export { Action, ActionTypes };
-export { draw, erase, appendFrame, prependFrame };
+export { draw, erase, appendFrame, prependFrame, cycleBack, cycleForward };
