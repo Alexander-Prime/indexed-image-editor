@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { Icon } from "components/atoms";
-import { Frame } from "components/molecules";
+import { FrameView } from "components/molecules";
 
 import { AppState } from "data/AppState";
-import { Image, prependFrame, appendFrame } from "data/Image";
+import { appendFrame, Image, prependFrame } from "data/Image";
 
 import "./Strip.scss";
 
@@ -16,8 +16,8 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  prependFrame: () => void;
-  appendFrame: () => void;
+  dispatchPrependFrame: () => void;
+  dispatchAppendFrame: () => void;
 }
 
 interface OwnProps {}
@@ -26,14 +26,19 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 class StripInternal extends React.PureComponent<Props> {
   render() {
-    const { currentFrame, image, prependFrame, appendFrame } = this.props;
+    const {
+      currentFrame,
+      image,
+      dispatchPrependFrame,
+      dispatchAppendFrame,
+    } = this.props;
     return (
       <div className="strip">
-        <button className="strip-addButton" onClick={prependFrame}>
+        <button className="strip-addButton" onClick={dispatchPrependFrame}>
           <Icon name="add" />
         </button>
         {image.frames.map((frame, i) => (
-          <Frame
+          <FrameView
             className="strip-frame"
             image={image}
             frame={frame}
@@ -43,7 +48,7 @@ class StripInternal extends React.PureComponent<Props> {
             visible={i === currentFrame}
           />
         ))}
-        <button className="strip-addButton" onClick={appendFrame}>
+        <button className="strip-addButton" onClick={dispatchAppendFrame}>
           <Icon name="add" />
         </button>
       </div>
@@ -57,8 +62,8 @@ const mapStateToProps = (state: AppState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
-  appendFrame: () => dispatch(appendFrame()),
-  prependFrame: () => dispatch(prependFrame()),
+  dispatchAppendFrame: () => dispatch(appendFrame()),
+  dispatchPrependFrame: () => dispatch(prependFrame()),
 });
 
 const Strip = connect(mapStateToProps, mapDispatchToProps)(StripInternal);

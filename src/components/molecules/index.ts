@@ -1,4 +1,4 @@
 export { CanvasView } from "./CanvasView";
-export { Frame } from "./Frame";
+export { FrameView } from "./FrameView";
 export { PaletteView } from "./PaletteView";
 export { RampView } from "./RampView";

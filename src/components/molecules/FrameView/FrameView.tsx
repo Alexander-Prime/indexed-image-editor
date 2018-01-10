@@ -7,7 +7,7 @@ import { Icon } from "components/atoms";
 import { ColorIndex } from "data/common";
 import { Image } from "data/Image";
 
-import "./Frame.scss";
+import "./FrameView.scss";
 
 interface Props {
   className?: string;
@@ -18,7 +18,7 @@ interface Props {
   visible: boolean;
 }
 
-class Frame extends React.PureComponent<Props> {
+class FrameView extends React.PureComponent<Props> {
   private ctx: CanvasRenderingContext2D;
 
   componentDidMount() {
@@ -76,4 +76,4 @@ class Frame extends React.PureComponent<Props> {
   }
 }
 
-export { Frame };
+export { FrameView };
