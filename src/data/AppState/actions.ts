@@ -1,3 +1,5 @@
+import { ColorIndex } from "data/common";
+
 const enum ActionTypes {
   PICK_COLOR = "[AppState] Pick color",
   SET_CURRENT_FRAME = "[AppState] Set current frame",
@@ -16,11 +18,11 @@ type Action =
 
 interface PickColorAction {
   type: ActionTypes.PICK_COLOR;
-  payload: { index: number };
+  payload: { colorIndex: ColorIndex };
 }
-const pickColor = (index: number): Action => ({
+const pickColor = (colorIndex: ColorIndex): Action => ({
   type: ActionTypes.PICK_COLOR,
-  payload: { index },
+  payload: { colorIndex },
 });
 
 interface SetCurrentFrameAction {

@@ -5,15 +5,16 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { AppState } from "data/AppState";
+import { ColorIndex, Frame } from "data/common";
 import { draw, erase, Image } from "data/Image";
 
 import "./CanvasView.scss";
 
 interface StateProps {
   image: Image;
-  frame: List<number | undefined>;
+  frame: Frame;
   zoom: number;
-  selectedColor: number;
+  selectedColor: ColorIndex;
   currentFrame: number;
 }
 
@@ -83,14 +84,11 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
   private renderPixels() {
     const { image, frame, selectedColor } = this.props;
     const bytes = new Uint8ClampedArray(
-      frame.reduce((prior: number[], c: number | undefined, i: number) => {
+      frame.reduce((prior: number[], c: ColorIndex | undefined, i: number) => {
         const { drawMask, drawMode } = this.state;
         if (drawMask.get(i)) {
           if (drawMode === "draw") {
-            prior.push(
-              ...image.palette.colors.get(selectedColor, [0, 0, 0]),
-              255,
-            );
+            prior.push(...ColorIndex.toRgb(image, selectedColor), 255);
           } else {
             prior.push(0, 0, 0, 0);
           }
@@ -98,7 +96,7 @@ class CanvasViewInternal extends React.PureComponent<Props, State> {
           if (c === undefined) {
             prior.push(0, 0, 0, 0);
           } else {
-            prior.push(...image.palette.colors.get(c, [0, 0, 0]), 255);
+            prior.push(...ColorIndex.toRgb(image, c), 255);
           }
         }
         return prior;

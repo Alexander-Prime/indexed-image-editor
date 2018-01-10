@@ -5,25 +5,4 @@
   flex-flow: column nowrap;
   align-items: stretch;
   padding: $list-padding-vertical 0;
-
-  &-colors {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(auto-fill, 24px);
-    grid-auto-rows: 24px;
-    padding: $list-padding-vertical $list-padding-horizontal;
-
-    &-divider {
-      grid-column: 1 / -1;
-    }
-
-    &-swatch {
-      transition: box-shadow 100ms ease;
-
-      &.is-selected {
-        box-shadow: 0 0 8px black, 0 0 0 1px white inset, 0 0 0 3px black inset;
-        transition: none;
-      }
-    }
-  }
 }

@@ -1,1 +1,0 @@
-export { RampHeading } from "./RampHeading";

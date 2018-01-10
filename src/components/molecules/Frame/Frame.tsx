@@ -4,13 +4,14 @@ import React from "react";
 
 import { Icon } from "components/atoms";
 
+import { ColorIndex } from "data/common";
 import { Image } from "data/Image";
 
 import "./Frame.scss";
 
 interface Props {
   className?: string;
-  frame: List<number | undefined>;
+  frame: List<ColorIndex | undefined>;
   image: Image;
   index: number;
   selected: boolean;
@@ -58,11 +59,11 @@ class Frame extends React.PureComponent<Props> {
   private renderPixels() {
     const { image, frame } = this.props;
     const bytes = new Uint8ClampedArray(
-      frame.reduce((prior: number[], c: number | undefined) => {
+      frame.reduce((prior: number[], c: ColorIndex | undefined) => {
         if (c === undefined) {
           prior.push(0, 0, 0, 0);
         } else {
-          prior.push(...image.palette.colors.get(c, [0, 0, 0]), 255);
+          prior.push(...ColorIndex.toRgb(image, c), 255);
         }
         return prior;
       }, []),

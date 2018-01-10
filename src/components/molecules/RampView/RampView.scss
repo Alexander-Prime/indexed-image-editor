@@ -1,0 +1,28 @@
+@import "~common/styles/dimens";
+
+.ramp {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, 24px);
+  grid-auto-rows: 24px;
+  padding: $list-padding-vertical $list-padding-horizontal;
+
+  &-heading {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &-swatch {
+    transition: box-shadow 100ms ease;
+
+    &.is-selected {
+      box-shadow: 0 0 8px black, 0 0 0 1px white inset, 0 0 0 3px black inset;
+      transition: none;
+    }
+  }
+}

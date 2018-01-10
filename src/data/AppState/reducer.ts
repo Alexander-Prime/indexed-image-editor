@@ -8,7 +8,7 @@ import { AppState } from "./model";
 const ownReducer = (state: AppState, action: Action) => {
   switch (action.type) {
     case ActionTypes.PICK_COLOR: {
-      return state.set("selectedColor", action.payload.index);
+      return state.set("selectedColor", action.payload.colorIndex);
     }
     case ActionTypes.SET_CURRENT_FRAME: {
       return state.set("currentFrame", action.payload.frameIndex);

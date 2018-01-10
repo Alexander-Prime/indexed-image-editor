@@ -1,5 +1,7 @@
 import { Set } from "immutable";
 
+import { ColorIndex } from "data/common";
+
 const enum ActionTypes {
   DRAW = "[Image] Draw",
   ERASE = "[Image] Erase",
@@ -18,12 +20,16 @@ type Action =
 
 interface DrawAction {
   type: ActionTypes.DRAW;
-  payload: { frameIndex: number; drawMask: Set<number>; colorIndex: number };
+  payload: {
+    frameIndex: number;
+    drawMask: Set<number>;
+    colorIndex: ColorIndex;
+  };
 }
 const draw = (
   frameIndex: number,
   drawMask: Set<number>,
-  colorIndex: number,
+  colorIndex: ColorIndex,
 ): Action => ({
   type: ActionTypes.DRAW,
   payload: { frameIndex, drawMask, colorIndex },

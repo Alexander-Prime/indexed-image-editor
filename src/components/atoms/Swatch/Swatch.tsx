@@ -9,7 +9,7 @@ interface Props {
   className?: string;
   color: Rgb;
   index: number;
-  onPick?: (color: Rgb, index: number) => void;
+  onPick?: (index: number) => void;
 }
 
 class Swatch extends React.PureComponent<Props> {
@@ -27,9 +27,9 @@ class Swatch extends React.PureComponent<Props> {
   }
 
   private onClick = () => {
-    const { color, index, onPick } = this.props;
+    const { index, onPick } = this.props;
     if (onPick) {
-      onPick(color, index);
+      onPick(index);
     }
   };
 }
